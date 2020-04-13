@@ -3,9 +3,10 @@ package extraDB
 import (
 	"context"
 
-	"github.com/ZeroTechh/UserService/core/types"
 	"github.com/ZeroTechh/VelocityCore/utils"
 	"go.mongodb.org/mongo-driver/mongo"
+
+	"github.com/ZeroTechh/UserExtraService/core/types"
 )
 
 // New returns a new extraDB handler struct

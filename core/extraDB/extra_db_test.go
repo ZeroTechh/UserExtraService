@@ -4,10 +4,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ZeroTechh/UserService/core/types"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/ZeroTechh/UserService/core/utils"
+	"github.com/ZeroTechh/UserExtraService/core/types"
+	"github.com/ZeroTechh/UserExtraService/core/utils"
 )
 
 func TestExtraDB(t *testing.T) {
@@ -15,7 +15,7 @@ func TestExtraDB(t *testing.T) {
 	extraDB := New()
 
 	// Testing Create function
-	_, mockData := utils.GetMockUserData()
+	mockData := utils.MockData()
 	mockData.UserID = mockData.FirstName
 	msg := extraDB.Create(mockData)
 	assert.Zero(msg)
@@ -28,7 +28,7 @@ func TestExtraDB(t *testing.T) {
 	assert.Equal(mockData, returnedData)
 
 	// Testing Update
-	_, mockData2 := utils.GetMockUserData()
+	mockData2 := utils.MockData()
 	update := types.Extra{FirstName: mockData2.FirstName}
 	msg = extraDB.Update(mockData.UserID, update)
 	assert.Zero(msg)
@@ -42,7 +42,7 @@ func TestExtraDB(t *testing.T) {
 	assert.NotZero(msg)
 
 	// Testing Create returns message for invalid age
-	_, mockData = utils.GetMockUserData()
+	mockData = utils.MockData()
 	mockData.UserID = mockData.FirstName
 	mockData.BirthdayUTC = time.Now().Unix()
 	msg = extraDB.Create(mockData)
