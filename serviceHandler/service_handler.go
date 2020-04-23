@@ -58,3 +58,9 @@ func (handler Handler) Update(ctx context.Context, request *proto.UpdateRequest)
 	msg := handler.extraDB.Update(request.UserID, update)
 	return &proto.UpdateResponse{Message: msg}, nil
 }
+
+// Validate is used to handle Validate function
+func (handler Handler) Validate(ctx context.Context, request *proto.Data) (*proto.ValidateResponse, error) {
+	valid := extraDB.IsDataValid(protoToData(request))
+	return &proto.ValidateResponse{Valid: valid}, nil
+}

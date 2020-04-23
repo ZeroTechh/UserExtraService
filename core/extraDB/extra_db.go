@@ -32,7 +32,7 @@ func (extraDB *ExtraDB) init() {
 
 // Create is used to add new data into database
 func (extraDB ExtraDB) Create(data types.Extra) string {
-	if !isDataValid(data) {
+	if !IsDataValid(data) {
 		return messages.Str("invalidUserData")
 	}
 
@@ -49,7 +49,7 @@ func (extraDB ExtraDB) Get(userID string) (data types.Extra) {
 
 // Update updates user's extraDB data
 func (extraDB ExtraDB) Update(userID string, update types.Extra) string {
-	if !isUpdateValid(update) {
+	if !IsUpdateValid(update) {
 		return messages.Str("invalidUserData")
 	}
 

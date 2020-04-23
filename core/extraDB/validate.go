@@ -13,8 +13,8 @@ var schemaPaths = []string{"schemas", "../core/extraDB/schemas", "core/extraDB/s
 
 const schemaFile = "schema.yaml"
 
-// checks if data is valid
-func isDataValid(data interface{}) bool {
+// IsDataValid checks if data is valid
+func IsDataValid(data interface{}) bool {
 	funcLog := blaze.NewFuncLog(
 		"isDataValid",
 		log,
@@ -33,8 +33,8 @@ func isDataValid(data interface{}) bool {
 	return valid
 }
 
-// checks if the update is valid
-func isUpdateValid(update interface{}) bool {
+// IsUpdateValid checks if the update is valid
+func IsUpdateValid(update interface{}) bool {
 	funcLog := blaze.NewFuncLog(
 		"isUpdateValid",
 		log,

@@ -3,6 +3,8 @@ github.com/BurntSushi/toml v0.3.1 h1:WXkYYl6Yr3qBf1K79EBnL4mak0OimBfB0XUf9Vl28OQ
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/ZeroTechh/VelocityCore v0.0.21 h1:B8+a4ijo6GjSdNk3BG/T5wviCjLWa7q8HVa0lG1KnSc=
 github.com/ZeroTechh/VelocityCore v0.0.21/go.mod h1:2D5bnrxlafVR9RuFoKdulX+SUX8Z1yx3Q7hGdUWslFY=
+github.com/ZeroTechh/VelocityCore v0.0.26 h1:+SmeLLPzB/m+QSEKSAw2XZkI/5PgCpcviblnwhWc2zM=
+github.com/ZeroTechh/VelocityCore v0.0.26/go.mod h1:2D5bnrxlafVR9RuFoKdulX+SUX8Z1yx3Q7hGdUWslFY=
 github.com/ZeroTechh/blaze v0.1.5/go.mod h1:VlFs7I4ULXTM3OfX+E8yvfuDecaNORKPa08xR1Oq8x8=
 github.com/ZeroTechh/blaze v0.1.6 h1:3ob6f8RTSP5Wd8KsBjJMlLeQMMihwbpRTatLzSvCl3Y=
 github.com/ZeroTechh/blaze v0.1.6/go.mod h1:VlFs7I4ULXTM3OfX+E8yvfuDecaNORKPa08xR1Oq8x8=
