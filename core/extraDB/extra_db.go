@@ -31,7 +31,7 @@ func (e *ExtraDB) init() {
 
 // Create adds new user extra data into db
 func (e ExtraDB) Create(ctx context.Context, data types.Extra) (string, error) {
-	if !valid(data) {
+	if !Valid(data) {
 		return messages.Str("invalidUserData"), nil
 	}
 	_, err := e.coll.InsertOne(ctx, data)

@@ -13,8 +13,8 @@ var schemaPaths = []string{"schemas", "../core/extraDB/schemas", "core/extraDB/s
 
 const schemaFile = "schema.yaml"
 
-// valid checks if data is valid
-func valid(data interface{}) bool {
+// Valid checks if data is valid
+func Valid(data interface{}) bool {
 	funcLog := blaze.NewFuncLog("Valid", log, zap.Any("Data", data))
 	funcLog.Started()
 	valid, msg, _ := sentinal.ValidateWithYAML(
