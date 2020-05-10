@@ -7,8 +7,7 @@ import (
 	"github.com/ZeroTechh/UserExtraService/core/types"
 )
 
-// generateRandStr generates a random string
-func generateRandStr(length int) string {
+func randStr(length int) string {
 	charset := "1234567890abcdefghijklmnopqrstuvwxyz"
 	seededRand := rand.New(
 		rand.NewSource(time.Now().UnixNano()))
@@ -19,9 +18,9 @@ func generateRandStr(length int) string {
 	return string(b)
 }
 
-// MockData returns mock user extra data for testing
-func MockData() types.Extra {
-	randomStr := generateRandStr(10)
+// Mock returns mock user extra data for testing
+func Mock() types.Extra {
+	randomStr := randStr(10)
 	return types.Extra{
 		UserID:      randomStr,
 		FirstName:   randomStr,

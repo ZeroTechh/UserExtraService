@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/ZeroTechh/VelocityCore/utils"
+	"github.com/pkg/errors"
 	"go.mongodb.org/mongo-driver/mongo"
 
 	"github.com/ZeroTechh/UserExtraService/core/types"
@@ -11,52 +12,52 @@ import (
 
 // New returns a new extraDB handler struct
 func New() *ExtraDB {
-	extraDB := ExtraDB{}
-	extraDB.init()
-	return &extraDB
+	e := ExtraDB{}
+	e.init()
+	return &e
 }
 
 // ExtraDB is used to handle user extra data
 type ExtraDB struct {
-	client     *mongo.Client
-	database   *mongo.Database
-	collection *mongo.Collection
+	coll *mongo.Collection
 }
 
 // init initializes client and database
-func (extraDB *ExtraDB) init() {
-	extraDB.client = utils.CreateMongoDB(dbConfig.Str("address"), log)
-	extraDB.database = extraDB.client.Database(dbConfig.Str("db"))
-	extraDB.collection = extraDB.database.Collection(dbConfig.Str("collection"))
+func (e *ExtraDB) init() {
+	c := utils.CreateMongoDB(dbConfig.Str("address"), log)
+	db := c.Database(dbConfig.Str("db"))
+	e.coll = db.Collection(dbConfig.Str("collection"))
 }
 
-// Create is used to add new data into database
-func (extraDB ExtraDB) Create(data types.Extra) string {
-	if !IsDataValid(data) {
-		return messages.Str("invalidUserData")
+// Create adds new user extra data into db
+func (e ExtraDB) Create(ctx context.Context, data types.Extra) (string, error) {
+	if !valid(data) {
+		return messages.Str("invalidUserData"), nil
 	}
-
-	extraDB.collection.InsertOne(context.TODO(), data)
-	return ""
+	_, err := e.coll.InsertOne(ctx, data)
+	return "", errors.Wrap(err, "Error while inserting into db")
 }
 
-// Get is used to a users data
-func (extraDB ExtraDB) Get(userID string) (data types.Extra) {
-	filter := types.Extra{UserID: userID}
-	extraDB.collection.FindOne(context.TODO(), filter).Decode(&data)
+// Get returns user extra data
+func (e ExtraDB) Get(ctx context.Context, userID string) (data types.Extra, err error) {
+	err = e.coll.FindOne(ctx, types.Extra{UserID: userID}).Decode(&data)
+	err = errors.Wrap(err, "Error while finding from db")
 	return
 }
 
-// Update updates user's extraDB data
-func (extraDB ExtraDB) Update(userID string, update types.Extra) string {
-	if !IsUpdateValid(update) {
-		return messages.Str("invalidUserData")
+// Update updates user extra data
+func (e ExtraDB) Update(
+	ctx context.Context, userID string, update types.Extra) (string, error) {
+
+	if !updateValid(update) {
+		return messages.Str("invalidUserData"), nil
 	}
 
-	extraDB.collection.UpdateOne(
-		context.TODO(),
+	_, err := e.coll.UpdateOne(
+		ctx,
 		types.Extra{UserID: userID},
 		map[string]types.Extra{"$set": update},
 	)
-	return ""
+
+	return "", errors.Wrap(err, "Error while updating db")
 }

@@ -13,35 +13,24 @@ var schemaPaths = []string{"schemas", "../core/extraDB/schemas", "core/extraDB/s
 
 const schemaFile = "schema.yaml"
 
-// IsDataValid checks if data is valid
-func IsDataValid(data interface{}) bool {
-	funcLog := blaze.NewFuncLog(
-		"isDataValid",
-		log,
-		zap.Any("Data", data),
-	)
+// valid checks if data is valid
+func valid(data interface{}) bool {
+	funcLog := blaze.NewFuncLog("Valid", log, zap.Any("Data", data))
 	funcLog.Started()
-
 	valid, msg, _ := sentinal.ValidateWithYAML(
 		data,
 		schemaFile,
 		schemaPaths,
 		customFuncs,
 	)
-
 	funcLog.Completed(zap.Any("Message", msg))
 	return valid
 }
 
-// IsUpdateValid checks if the update is valid
-func IsUpdateValid(update interface{}) bool {
-	funcLog := blaze.NewFuncLog(
-		"isUpdateValid",
-		log,
-		zap.Any("Update", update),
-	)
+// updateValid checks if the update is valid
+func updateValid(update interface{}) bool {
+	funcLog := blaze.NewFuncLog("UpdateValid", log, zap.Any("Update", update))
 	funcLog.Started()
-
 	valid, msg, _ := sentinal.ValidateFieldsWithYAML(
 		update,
 		schemaFile,
@@ -53,7 +42,7 @@ func IsUpdateValid(update interface{}) bool {
 	if reflect.ValueOf(update).FieldByName("UserID").String() != "" {
 		valid = false
 		msg = map[string][]string{
-			"UserID": []string{"Tring to update UserID"},
+			"UserID": {"Tring to update UserID"},
 		}
 	}
 

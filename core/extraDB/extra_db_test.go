@@ -1,6 +1,7 @@
 package extraDB
 
 import (
+	"context"
 	"testing"
 	"time"
 
@@ -12,39 +13,46 @@ import (
 
 func TestExtraDB(t *testing.T) {
 	assert := assert.New(t)
-	extraDB := New()
+	e := New()
+	ctx := context.TODO()
 
 	// Testing Create function
-	mockData := utils.MockData()
-	mockData.UserID = mockData.FirstName
-	msg := extraDB.Create(mockData)
+	data := utils.Mock()
+	msg, err := e.Create(ctx, data)
 	assert.Zero(msg)
+	assert.NoError(err)
 
 	// Testing that Create returns invalid data message for invalid data
-	assert.NotZero(extraDB.Create(types.Extra{}))
+	msg, err = e.Create(ctx, types.Extra{})
+	assert.NoError(err)
+	assert.NotZero(msg)
 
 	// Testing Get
-	returnedData := extraDB.Get(mockData.UserID)
-	assert.Equal(mockData, returnedData)
+	d, err := e.Get(ctx, data.UserID)
+	assert.NoError(err)
+	assert.Equal(data, d)
 
 	// Testing Update
-	mockData2 := utils.MockData()
-	update := types.Extra{FirstName: mockData2.FirstName}
-	msg = extraDB.Update(mockData.UserID, update)
+	data2 := utils.Mock()
+	update := types.Extra{FirstName: data2.FirstName}
+	msg, err = e.Update(ctx, data.UserID, update)
 	assert.Zero(msg)
+	assert.NoError(err)
 
-	returnedData = extraDB.Get(mockData.UserID)
-	assert.Equal(mockData2.FirstName, returnedData.FirstName)
+	d, err = e.Get(ctx, data.UserID)
+	assert.NoError(err)
+	assert.Equal(data2.FirstName, d.FirstName)
 
 	// Testing Update returns message for invalid update
 	update = types.Extra{UserID: "NN"}
-	msg = extraDB.Update(mockData.UserID, update)
+	msg, err = e.Update(ctx, data.UserID, update)
 	assert.NotZero(msg)
+	assert.NoError(err)
 
 	// Testing Create returns message for invalid age
-	mockData = utils.MockData()
-	mockData.UserID = mockData.FirstName
-	mockData.BirthdayUTC = time.Now().Unix()
-	msg = extraDB.Create(mockData)
+	data = utils.Mock()
+	data.BirthdayUTC = time.Now().Unix()
+	msg, err = e.Create(ctx, data)
 	assert.NotZero(msg)
+	assert.NoError(err)
 }
