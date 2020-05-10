@@ -35,5 +35,5 @@ response, err := client.Update(ctx, &proto.UpdateRequest{
 Takes in user data and returns if it is valid.
 
 ```go
-response, err := client.Validate(ctx, UserData)
+response, _ := client.Validate(ctx, UserData)
 ```
